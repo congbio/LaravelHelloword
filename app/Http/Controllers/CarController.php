@@ -53,10 +53,12 @@ class CarController extends Controller
         $validated = $request->validate([
             'make' => 'required',
             'name' => 'required',
+            'image' => 'required',
            
         ],[
                 'make.required' => 'Chưa nhập mô tả',
                 'name.required' => 'Chưa nhập mô tả',
+                'image.required' => 'Chưa nhập mô tả',
                 
         ]);
         $car = new Car();
@@ -89,7 +91,9 @@ class CarController extends Controller
      */
     public function edit($id)
     {
-        //
+        $car = Car::find($id);
+        // dd($car);
+        return view('editCard',compact('car'));
     }
 
     /**
@@ -101,7 +105,38 @@ class CarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $name='';
+        $validated = $request->validate([
+            'make' => 'required',
+            'name' => 'required',
+            'image' => 'required',
+           
+        ],[
+                'make.required' => 'Chưa nhập mô tả',
+                'name.required' => 'Chưa nhập mô tả',
+                'image.required' => 'Chưa nhập mô tả',
+                
+        ]);
+        if($request -> hasfile('image')){
+            $this->validate($request,[
+                'image'=>'mimes:jpg,png,gif,jpeg|max: 2048'
+            ],[
+                'image.mimes'=>'Chỉ chấp nhận file hình ảnh',
+                'image.max'=>'Chỉ chấp nhận hình ảnh dưới 2Mb',
+            ]);
+            $file = $request->file('image');
+            $name = 'image/'.time().'_'.$file->getClientOriginalName();
+            $destinationPath=public_path('image');
+            $file -> move($destinationPath, $name);
+        }
+   
+        $car = Car::find($id);
+        $car -> make=$request->make;
+        $car->name = $request -> name;
+        $car -> image = $name;
+        $car -> save();
+        
+        return redirect()-> route('cars.index')->with('success', 'Bạn đã cập nhật thành công');
     }
 
     /**
@@ -112,6 +147,8 @@ class CarController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $car = Car::find($id);
+        $car -> delete();
+        return redirect()-> route('cars.index')->with('success', 'Bạn đã xóa thành công!');
     }
 }

@@ -15,39 +15,38 @@
 <body>
     <div class="container mt-5" style="background-color:black">
         <button><a class="btn btn-primary" href="{{route('cars.index')}}">View All </a></button>
-        <a class="btn btn-success" href="{{route('cars.create')}}">Create New car</a>
+        
         @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-        <form action="{{route('cars.store')}}" method="POST" enctype="multipart/form-data">
+            @endforeach
+        </ul>
+    </div>
+@endif
+        <form action="{{route('cars.update',$car->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('put')
             <div class="row">
                 <div class="form-group col-6">
                     <label style="color:wheat" for="exampleInputEmail1">Name</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" name="name"
-                        aria-describedby="emailHelp" placeholder="Enter name car">
-                    <span  style="background-color: wheat; color:red">{{$errors->first('name')}}</span>
-
+                    placeholder="Enter name car" value="{{ isset($car)?$car->name:'' }}" >
                 </div>
                 <div class="form-group col-6">
                     <label style="color:wheat" for="exampleInputPassword1">Image</label>
-                    <input type="file" name="image" class="form-control" id="exampleInputPassword1" placeholder="Enter image">
-                    <span style="background-color: wheat; color:red">{{$errors->first('image')}}</span>
+                    <input  type="file" name="image" class="form-control" id="exampleInputPassword1" placeholder="Enter image">
+                    <img style="width:200px;height: 200px;" src ="/{{ isset($car)?$car->image :''}}"/>
                 </div>
 
 
             </div>
             <div class="form-group">
                 <label style="color:wheat" for="exampleInputPassword1">Make</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="make"
+                <input type="text" class="form-control"  value="{{isset($car)?$car->make :''}} id="exampleInputEmail1" aria-describedby="emailHelp" name="make"
                     placeholder="Enter Make ">
-                <span style="background-color: wheat; color:red">{{$errors->first('make')}}</span>
+               
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

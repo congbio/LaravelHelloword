@@ -20,11 +20,11 @@
             </div><!-- / project-info-box -->
 
             <div class="project-info-box">
-                <p><b>Client:</b> CUPCAKE CO</p>
+           
                 <p><b>Date:</b> {{$a->created_at}}</p>
-                <p><b>Designer:</b> James Doe</p>
-                <p><b>Tools:</b> Illustrator</p>
-                <p class="mb-0"><b>Budget:</b> $500</p>
+               
+       
+              
             </div><!-- / project-info-box -->
 
             <div class="project-info-box mt-0 mb-0">
@@ -39,7 +39,7 @@
         </div><!-- / column -->
 
         <div class="col-md-7">
-            <img src="/{{$a->image}}" alt="project-image" class="rounded">
+            <img src="/{{$a->image}}" style="width: 100px;height: 100px;" alt="project-image" class="rounded">
             <div class="project-info-box">
                 <p><b>Categories:</b> Design, Illustration</p>
                 <p><b>Skills:</b> Illustrator</p>

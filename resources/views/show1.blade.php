@@ -5,7 +5,6 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
@@ -14,7 +13,7 @@
   <table class="table">
   <thead>
     <tr>
-      <th scope="col">One</th>
+      <!-- <th scope="col">One</th> -->
       <th scope="col">Name</th>
       <th scope="col">Image</th>
       <th scope="col">Make</th>
@@ -26,19 +25,21 @@
   <tbody>
   @foreach ($cars as $car)
         <tr> 
-        <th scope="row">Car {{ $car['id'] }}</th>
+        <form action="{{ route('cars.destroy',$car->id)}} " method ="POST">
+        @csrf
+        @method('delete')
         <td>{{$car['name']}}</td>
-        <td><img src = "{{$car['image']}}" style="width: 100px;height: 100px;;"/>  </td>
+        <td><img src = "/{{$car['image']}}" style="width: 100px;height: 100px;"/>  </td>
         <td>{{$car['make']}}</td>
         <td> {{$car['created_at']}}</td>
         <td> {{$car['updated_at']}}</td>
-        <td> <button class ="btn bg-success">Update</button>
-        <button class ="btn bg-danger">Delete</button>
+        <td> 
+          <button onclick="window.location='{{ route('cars.edit', $car->id) }}'" class ="btn bg-success">Update</button>
+        <button class ="btn bg-danger" type="submit">Delete</button>
         </td>
+        </form>
         </tr>
     @endforeach
-    
-    
   </tbody>
 </table>
 
