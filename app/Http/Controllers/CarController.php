@@ -37,16 +37,35 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'namecar' => 'required|max:255',
-            'image' => 'required|max:2048',
-            'make' => 'required|max:255',
-            
+        $name='';
+        if($request -> hasfile('image')){
+            $this->validate($request,[
+                'image'=>'mimes:jpg,png,gif,jpeg|max: 2048'
+            ],[
+                'image.mimes'=>'Chỉ chấp nhận file hình ảnh',
+                'image.max'=>'Chỉ chấp nhận hình ảnh dưới 2Mb',
             ]);
-            
-      //checking if featured image (logo file) is uploaded or not 
-      
-        return view('sp.services.create')->with('categories', Category::all())->with('workingday', Workingday::all());
+            $file = $request->file('image');
+            $name = 'image/'.time().'_'.$file->getClientOriginalName();
+            $destinationPath=public_path('image');
+            $file -> move($destinationPath, $name);
+        }
+        $validated = $request->validate([
+            'make' => 'required',
+            'name' => 'required',
+           
+        ],[
+                'make.required' => 'Chưa nhập mô tả',
+                'name.required' => 'Chưa nhập mô tả',
+                
+        ]);
+        $car = new Car();
+        $car -> make=$request->make;
+        $car->name = $request -> name;
+        $car -> image = $name;
+        $car -> save();
+        
+        return redirect()-> route('cars.index')->with('success', 'Bạn đã cập nhật thành công');
     }
 
     /**

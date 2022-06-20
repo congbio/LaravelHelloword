@@ -14,32 +14,41 @@
 
 <body>
     <div class="container mt-5" style="background-color:black">
-            <button><a  class="btn btn-primary" href="{{route('cars.index')}}">View All </a></button>
-            <a class="btn btn-success" href="{{route('cars.create')}}" >Create New car</a>
-            <form>
-            @csrf   
-                <div class="row" >
-                    <div class="form-group col-6">
+        <button><a class="btn btn-primary" href="{{route('cars.index')}}">View All </a></button>
+        <a class="btn btn-success" href="{{route('cars.create')}}">Create New car</a>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        <form action="{{route('cars.store')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
+                <div class="form-group col-6">
                     <label style="color:wheat" for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name ="namecar" aria-describedby="emailHelp"
-                        placeholder="Enter name car">
-                        <span>{{$errors->first('namecar')}}</span>
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="name"
+                        aria-describedby="emailHelp" placeholder="Enter name car">
+                    <span>{{$errors->first('name')}}</span>
 
                 </div>
                 <div class="form-group col-6">
                     <label style="color:wheat" for="exampleInputPassword1">Image</label>
-                    <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Enter image">
+                    <input type="file" name="image" class="form-control" id="exampleInputPassword1" placeholder="Enter image">
                     <span>{{$errors->first('image')}}</span>
                 </div>
-                
-                
+
+
             </div>
             <div class="form-group">
-                    <label style="color:wheat" for="exampleInputPassword1">Make</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                    name="make"    placeholder="Enter Make "> 
-                        <span>{{$errors->first('make')}}</span>
-                </div>
+                <label style="color:wheat" for="exampleInputPassword1">Make</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="make"
+                    placeholder="Enter Make ">
+                <span>{{$errors->first('make')}}</span>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
