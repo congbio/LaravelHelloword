@@ -15,16 +15,16 @@
 <body>
     <div class="container mt-5" style="background-color:black">
         <button><a class="btn btn-primary" href="{{route('cars.index')}}">View All </a></button>
-        
-        @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
+
+        <!-- @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                @endforeach
+            </ul>
+        </div>
+        @endif -->
         <form action="{{route('cars.update',$car->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
@@ -32,27 +32,38 @@
                 <div class="form-group col-6">
                     <label style="color:wheat" for="exampleInputEmail1">Name</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" name="name"
-                    placeholder="Enter name car" value="{{ isset($car)?$car->name:'' }}" >
+                        placeholder="Enter name car" value="{{ isset($car)?$car->name:'' }}">
                 </div>
                 <div class="form-group col-6">
                     <label style="color:wheat" for="exampleInputPassword1">Image</label>
-                    <input  type="file" name="image" class="form-control" id="exampleInputPassword1" placeholder="Enter image">
-                    <img style="width:200px;height: 200px;" src ="/{{ isset($car)?$car->image :''}}"/>
+                    <input type="file" name="image" onchange="changeImage(event)" class="form-control"
+                        id="exampleInputPassword1" placeholder="Enter image">
+                    <img style="width:200px;height: 200px;" id="newImage" src="/{{ isset($car)?$car->image :''}}" />
                 </div>
 
 
             </div>
             <div class="form-group">
                 <label style="color:wheat" for="exampleInputPassword1">Make</label>
-                <input type="text" class="form-control"  value="{{isset($car)?$car->make :''}} id="exampleInputEmail1" aria-describedby="emailHelp" name="make"
-                    placeholder="Enter Make ">
-               
+                <input type="text" class="form-control" value="{{isset($car)?$car->make :''}} id=" exampleInputEmail1"
+                    aria-describedby="emailHelp" name="make" placeholder="Enter Make ">
+
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+    const changeImage = (e) => {
+        console.log('change')
+        var imgEle = document.getElementById('newImage')
+        imgEle.src = URL.createObjectURL(e.target.files[0])
+        imgEle.onload = () => {
+            URL.revokeObjectURL(output.src)
+        }
+    }
+    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>

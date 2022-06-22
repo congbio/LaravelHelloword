@@ -12,44 +12,64 @@
 </head>
 
 <body>
-    <button><a class="btn btn-success" href="{{route('cars.create')}}"> Create a Car</a></button>
-    <table class="table">
-        <thead>
-            <tr>
-                <!-- <th scope="col">One</th> -->
-                <th scope="col">Name</th>
-                <th scope="col">Image</th>
-                <th scope="col">Make</th>
-                <th scope="col">Created_at</th>
-                <th scope="col">Updated_at</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($cars as $car)
-            <tr>
-                <form action="{{ route('cars.destroy',$car->id)}} " method="POST">
-                    @csrf
-                    @method('delete')
-                    <td>{{$car['name']}}</td>
-                    <td><img src="/{{$car['image']}}" style="width: 100px;height: 100px;" /> </td>
-                    <td>{{$car['make']}}</td>
-                    <td> {{$car['created_at']}}</td>
-                    <td> {{$car['updated_at']}}</td>
-                    <td>
-                        <button onclick="window.location='{{ route('cars.edit', $car->id) }}'"
-                            class=" btn bg-success">Update</button>
-                        <button class="btn bg-danger" type="submit">Delete</button>
-                    </td>
-                </form>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="container">
+        @if(Session::has('success'))
+        <div class="alert alert-success">
+            {{
+                Session::get('success')
+            }}
+        </div>
+        @endif
 
+    </div>
+    <div class="container">
+        <button><a class="btn btn-success" href="{{route('cars.create')}}"> Create a Car</a></button>
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <!-- <th scope="col">One</th> -->
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Make</th>
+                    <th scope="col">Created_at</th>
+                    <th scope="col">Updated_at</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($cars as $car)
+                <tr>
+                    <form action="{{ route('cars.destroy',$car->id)}} " method="POST">
+                        @csrf
+                        @method('delete')
+                        <td>{{$car['name']}}</td>
+                        <td><img src="/{{$car['image']}}" style="width: 100px;height: 100px;" /> </td>
+                        <td>{{$car['make']}}</td>
+                        <td> {{$car['created_at']}}</td>
+                        <td> {{$car['updated_at']}}</td>
+                        <td>
+                            <a href="{{ route('cars.edit',$car->id)}}" type="button" class=" btn bg-success">Update</a>
+                            <button class="btn bg-danger" onclick="return myConfirm();" type="submit">Delete</button>
+                        </td>
+                    </form>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>
+    function myConfirm() {
+        var result = confirm("Want to delete?");
+        if (result == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
