@@ -15,11 +15,14 @@ class CreateCarsTable extends Migration
     public function up()
     {
         Schema::create('cars', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->unsignedInteger('pro_id');
             $table->string('name');
-            $table->string('description');
-            $table->timestamps();
+            $table->string('make');
             $table->string('image');
+            $table->foreign('pro_id')->references('id')->on('producers')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
+
         });
     }
 
@@ -30,6 +33,6 @@ class CreateCarsTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('cars');
+        Schema::dropIfExists('cars');
     }
 }

@@ -51,7 +51,18 @@
                     placeholder="Enter Make ">
                 <span style="background-color: wheat; color:red"> {{$errors->first('make')}}</span>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group">
+                <select name="pro_id" class="custom-select" aria-label="Default select example">
+                    @foreach ($producers as $pro)
+                    <option value="{{$pro->id}}">
+                        {{$pro->pro_name}}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
+
+            <button type=" submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
     <script>

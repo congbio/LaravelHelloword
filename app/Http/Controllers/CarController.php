@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Producer;
 use Illuminate\Support\Facades\File;
 class CarController extends Controller
 {
@@ -25,7 +26,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('create');
+       
+        return view('Create',['producers'=> Producer::get()]);
 
     }
 
@@ -66,6 +68,7 @@ class CarController extends Controller
         $car = new Car();
         $car -> make=$request->make;
         $car->name = $request -> name;
+        $car->pro_id = $request->pro_id;
         $car -> image = $name;
         $car -> save();
         
@@ -94,8 +97,8 @@ class CarController extends Controller
     public function edit($id)
     {
         $car = Car::find($id);
-        // dd($car);
-        return view('editCard',compact('car'));
+                // dd($car);
+        return view('editCard',compact('car'),['producers'=> Producer::get()]);
     }
 
     /**
@@ -135,6 +138,7 @@ class CarController extends Controller
         $car = Car::find($id);
         $car -> make=$request->make;
         $car->name = $request -> name;
+        $car->pro_id = $request -> pro_id;
         $car -> image = $name;
         $car -> save();
         

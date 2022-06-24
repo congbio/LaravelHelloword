@@ -31,8 +31,8 @@
                     <th scope="col">Name</th>
                     <th scope="col">Image</th>
                     <th scope="col">Make</th>
-                    <th scope="col">Created_at</th>
-                    <th scope="col">Updated_at</th>
+                    <th scope="col">Producer</th>
+
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -42,11 +42,10 @@
                     <form action="{{ route('cars.destroy',$car->id)}} " method="POST">
                         @csrf
                         @method('delete')
-                        <td>{{$car['name']}}</td>
-                        <td><img src="/{{$car['image']}}" style="width: 100px;height: 100px;" /> </td>
-                        <td>{{$car['make']}}</td>
-                        <td> {{$car['created_at']}}</td>
-                        <td> {{$car['updated_at']}}</td>
+                        <td>{{$car->name}}</td>
+                        <td><img src="/{{$car->image}}" style="width: 100px;height: 100px;" /> </td>
+                        <td>{{$car->make}}</td>
+                        <td>{{$car->producer->pro_name}}</td>
                         <td>
                             <a href="{{ route('cars.edit',$car->id)}}" type="button" class=" btn bg-success">Update</a>
                             <button class="btn bg-danger" onclick="return myConfirm();" type="submit">Delete</button>

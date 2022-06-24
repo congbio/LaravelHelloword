@@ -19,10 +19,8 @@ class CarFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'make' => $this->faker->name(),
-            'image'=>'image/hinh'.rand(1,4).'.jpg',
-            'created_at'=> now(),
-            'updated_at'=> now(),
-            
+            'pro_id' => rand(1,10),
+            'image'=>'image/hinh'.rand(1,4).'.jpg',     
         ];
     }
     

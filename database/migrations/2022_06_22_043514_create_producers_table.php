@@ -14,8 +14,8 @@ class CreateProducersTable extends Migration
     public function up()
     {
         Schema::create('producers', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->increments('id');
+            $table->string('pro_name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateProducersTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('producers');
+        Schema::dropIfExists('producers');
     }
 }

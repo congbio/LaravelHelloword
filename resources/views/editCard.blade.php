@@ -45,10 +45,20 @@
             </div>
             <div class="form-group">
                 <label style="color:wheat" for="exampleInputPassword1">Make</label>
-                <input type="text" class="form-control" value="{{isset($car)?$car->make :''}} id=" exampleInputEmail1"
-                    aria-describedby="emailHelp" name="make" placeholder="Enter Make ">
+                <input type="text" class="form-control" value="{{isset($car)?$car->make :''}} "
+                    aria-describedby=" emailHelp" name="make" placeholder="Enter Make ">
 
             </div>
+            <div class="form-group">
+                <select name="pro_id" class="custom-select" aria-label="Default select example">
+                    @foreach ($producers as $pro)
+                    <option value="{{$pro->id}}" {{ $car->producer->id == $pro->id?  "selected" :"" }}>
+                        {{$pro->pro_name}}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

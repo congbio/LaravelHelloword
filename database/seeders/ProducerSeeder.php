@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Producer;
+
 class ProducerSeeder extends Seeder
 {
     /**
@@ -13,7 +13,7 @@ class ProducerSeeder extends Seeder
      */
     public function run()
     {
-        Producer::factory()->count(20)->create();
+        \App\Models\Producer::factory(10)->create();
         
     }
 }
