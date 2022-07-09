@@ -16,11 +16,11 @@ class CreateCarsTable extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('pro_id');
-            $table->string('name');
-            $table->string('make');
+            // $table->unsignedInteger('manufaturers_id');
+            $table->string('description');
+            $table->string('model');
             $table->string('image');
-            $table->foreign('pro_id')->references('id')->on('producers')->onUpdate('cascade')->onDelete('cascade');
+            $table->date('produced_on');
             $table->timestamps();
 
         });
